@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<context:component-scan base-package="service,dao,controller" />
+
+
+	<!-- HandlerMapping -->
+	<bean id="handlerMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<value>
+				/userEntry.html=userEntry
+				/userEntry2.html=userEntry
+				/emplist.html=emplist
+				/emplist2.html=emplist
+			</value>
+		</property>
+	</bean>
+	<bean id="userEntry" class="controller.UserController"/>
+	<bean id="emplist" class="controller.EmpController"/>
+	<!-- ViewResolver -->
+	<bean id="resourceBundleViewResolver" 
+		class ="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<property name="basename">
+			<value>views</value>
+		</property>
+	</bean>
+	<!-- Validator -->
+<!-- 	<bean id="loginValidator" class="service.LoginValidator" />  -->
+		<!-- 직접 지정해주지 않으면 @Component로 지정해줘야함 -->
+<!-- 	<bean id="memberValidator" class="service.MemberValidator" /> -->
+			<!--controller에 있는 @Autowired 되어있는 
+				private Validator memberValidator; 과 id를 맞춰줘야함 -->
+	<!-- MessageSource -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>empmsg</value>
+				<value>messages</value> <!--messages.properties로 보냄  -->
+			</list>
+		</property>
+	</bean>
+</beans>
